@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Socket.io Chat App</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  </head>
+
+  <body>
+    <h1>Socket.io Chat App</h1>
+    <input id="text" type="text" />
+    <button id="send">Send</button>
+    <div id="chat"></div>
+
+    <script>
+      const addToChat = (message) => {
+        const chat = document.getElementById("chat");
+        chat.innerHTML += `<p>${message}</p>`;
+      };
+
+      // if we don't specify a url, then socket.io will use the current host
+      const socket = io();
+
+      // when we receive a 'message' event from the server, we add it to the chat
+      socket.on("message", addToChat);
+
+      // when we click the send button, we send the input to the server, add it to
+      // the chat and clear the box
+      document.getElementById("send").addEventListener("click", () => {
+        const text = document.getElementById("text");
+        addToChat(text.value);
+        socket.emit("message", text.value);
+        text.value = "";
+      });
+    </script>
+  </body>
+</html>
