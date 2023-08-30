@@ -18,7 +18,7 @@
       };
 
       // if we don't specify a url, then socket.io will use the current host
-      const socket = io("https://real-time-app-pi.vercel.app");
+      const socket = io();
 
       // when we receive a 'message' event from the server, we add it to the chat
       socket.on("message", addToChat);
